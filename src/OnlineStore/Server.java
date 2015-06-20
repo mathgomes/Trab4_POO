@@ -6,15 +6,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 
-public class Server {
+public class Server implements Runnable{
 
     //create an object of Singleton Server
     private static Server server = new Server();
-    // Endereço IP
-    private int portNumber;
     // Vetor de runnables para cuidar de cada cliente
     private ArrayList<ClientThread> Clients = new ArrayList<>();
+
     private ArrayList<Client> Customers = new ArrayList<>();
+
+    private ArrayList<Pair<Product,Integer>> Products = new ArrayList<>();
+
+    private ArrayList<Supplier> Suppliers = new ArrayList<>();
 
     private ServerSocket serverSocket;
 
@@ -24,12 +27,25 @@ public class Server {
         return server;
     }
 
-    public void communicate() throws IOException {
-        this.portNumber = 12348;
-        this.serverSocket = new ServerSocket(portNumber);
-        System.out.println("Server started");
-        try {
+    public ArrayList<Client> getCustomers() {
+        return this.Customers;
+    }
 
+    public ArrayList<Pair<Product,Integer>> getProducts() {
+        return Products;
+    }
+
+    public ArrayList<Supplier> getSuppliers() {
+        return Suppliers;
+    }
+
+    @Override
+    public void run() {
+
+        int portNumber = 12349;
+        try {
+            this.serverSocket = new ServerSocket(portNumber);
+            System.out.println("Server started");
             while (true) {
                 //wait for client to connect//
                 Socket socket = serverSocket.accept();
@@ -43,31 +59,13 @@ public class Server {
             }
         } catch (IOException ioe) {
             //I/O error in ServerSocket//
-            this.stopServer();
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void stopServer() {
-        try {
-            serverSocket.close();
-        }
-        catch (IOException ioe) {
-            //unable to close ServerSocket
-        }
-    }
-
-    public ArrayList<Client> getCustomers() {
-        return this.Customers;
-    }
-
-    public static void main(String []args) {
-
-        try {
-            Server s = Server.getInstance();
-            s.communicate();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
 

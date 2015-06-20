@@ -1,11 +1,8 @@
 package OnlineStore;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.stage.Stage;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,20 +12,20 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Client extends Application {
 
 
     // Socket desse cliente
     private Socket socket;
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
+
 
     private String name;
     private String address;
@@ -38,19 +35,66 @@ public class Client extends Application {
     private String password;
 
     private static Object answer = null;
+    private ArrayList<Product> shoppingCart = new ArrayList<>();
 
     public Client(){}
+    public Client(String ID, String password, String name, String phoneNumber, String email, String address) {
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.ID = ID;
+        this.password = password;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+    public String getID() {
+        return this.ID;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
 
         System.out.println("Client started!!");
-        socket = new Socket(Inet4Address.getLocalHost().getHostAddress(), 12348);
+        socket = new Socket(Inet4Address.getLocalHost().getHostAddress(), 12349);
         System.out.println("Connection established!!");
 
-        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+        inputStream = new ObjectInputStream(socket.getInputStream());
+        outputStream = new ObjectOutputStream(socket.getOutputStream());
 
         /* Thread para receber os inputs do servidor */
         new Thread(() -> {
@@ -61,7 +105,7 @@ public class Client extends Application {
                     }
                     // Le o vetor index recebido
                     answer = inputStream.readObject();
-                    System.out.println("Cliente recebeu" + answer);
+                    System.out.println("Cliente recebeu" + answer.getClass().getName());
                 }
             } catch (Exception e) {
                 System.out.println("Algo de errado aconteceu!! " + e.getMessage());
@@ -172,53 +216,19 @@ public class Client extends Application {
 
     }
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-    public String getID() {
-        return this.ID;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public class ShopStage extends Stage {
 
         GridPane shopPane = new GridPane();
         Button listProducts = new Button("Listar Pordutos");
         Button efetuarCompra = new Button("Efetuar Compra");
+        Button logOut = new Button("LogOut");
 
         Label notifications = new Label();
 
         TextField field = new TextField();
         TextArea area = new TextArea();
+
+
 
         public ShopStage(){
 
@@ -233,30 +243,59 @@ public class Client extends Application {
             listProducts.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
                         area.setText("");
-                        field.setOnAction(event -> {
+                        area.setText("Nome, Preco, Fornecedor, Validade\n");
+                        try {
+                            outputStream.writeObject("listItems");
+                            Thread.sleep(400);
+                        } catch (IOException | InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+
+                        ArrayList<Product> list = (ArrayList<Product>) answer;
+                        //System.out.println("Recebeu " + list.get(0).getName() + list.get(0).getAvailability()+"\n");
+
+                        list.stream()
+                                .forEach(p -> area.appendText(p.getName() + "," + p.getPrice() + "," +
+                                        p.getSupplierName() + "," + p.getExpirationDate()+"\n"));
 
 
-                        });
                     }
             );
             efetuarCompra.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
                         notifications.setText("Digite o nome do produto que deseja comprar");
                         field.setOnAction(event -> {
+                            try {
+                                outputStream.writeObject(field.getText() + ",buyItem");
+                                Thread.sleep(400);
+                            } catch (IOException | InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
 
+                            if(answer instanceof String) {
+                                notifications.setText("Item esgotado :(");
+                            }
+                            else {
+                                Product p = (Product)answer;
+                                System.out.println("Recebeu " + p.getName() + p.getAvailability()+"\n");
+                                shoppingCart.add(p);
+                                notifications.setText("Compra efetuada com sucesso");
+                            }
                         });
                     }
             );
+            logOut.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> Platform.exit() );
 
 
             shopPane.add(listProducts,0,0);
             shopPane.add(efetuarCompra,0,1);
             shopPane.add(notifications,0,2);
-            shopPane.add(notifications,0,3);
+            shopPane.add(field,0,3);
             shopPane.add(area,0,4);
+            shopPane.add(logOut,0,5);
 
             this.setTitle("Area de Compras");
-            this.setScene(new Scene(shopPane, 600, 400));
+            this.setScene(new Scene(shopPane, 600, 500));
             this.show();
 
         }
