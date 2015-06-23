@@ -3,6 +3,12 @@ package OnlineStore;
 
 import java.io.Serializable;
 
+/**
+ * Classe que representa um par generico. Eh usada para
+ * associar um determinado produto à quantidade dele em estoque
+ * @param <L> um produto
+ * @param <R> um integer
+ */
 public class Pair<L,R> implements Serializable {
     private L l;
     private R r;

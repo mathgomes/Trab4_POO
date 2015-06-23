@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 
 public class CSVManager {
     /**
@@ -30,17 +31,24 @@ public class CSVManager {
                     // Se tiver algo pra ler
                     if (token.length > 0) {
                         switch(token[0]) {
+                            // Se for um prduto
                             case "Product":
+                                // Adiciona um novo produto
                                 Server.getInstance().getProducts().add(
                                         new Pair<>(new Product(token[1], token[2], token[3], token[4]), Integer.parseInt(token[5]))
                                 );
                                 break;
+                                // O mesmo para o cliente, fornecedor e vendas
                             case "Client":
                                 Client c = new Client(token[1],token[2],token[3],token[4],token[5],token[6]);
                                 Server.getInstance().getCustomers().add(c);
                                 break;
                             case "Supplier":
                                 Server.getInstance().getSuppliers().add(new Supplier(token[1]));
+                                break;
+                            case "Sale":
+                                Server.getInstance().getSales().add(new Sales(token[1],token[2],Sales.convert(token[3])) );
+                                break;
                         }
                     }
                 }
@@ -71,8 +79,9 @@ public class CSVManager {
         try {
 
             fileWriter = new FileWriter(fileName);
-            fileWriter.append("(client ou product ou supplier),(userID ou productName ou supplierName),(userPassword ou productPrice),(userName ou expirationDate)" +
-                    "phoneNumber ou productSupplier),(userEmail ou productQtd),(userAddress)\n");
+            fileWriter.append("(client ou product ou supplier),(userID ou productName ou supplierName),(userPassword ou productPrice),(userName ou expirationDate)," +
+                    "(phoneNumber ou productSupplier),(userEmail ou productQtd),(userAddress)\n");
+            // Escreve todas as informacoes pertinentes dos produtos, clientes, fornecedores e vendas
             for(Pair<Product,Integer> product : Server.getInstance().getProducts()) {
                 fileWriter.append("Product");
                 fileWriter.append(",");
@@ -103,10 +112,20 @@ public class CSVManager {
                 fileWriter.append(client.getAddress());
                 fileWriter.append("\n");
             }
-            for(Supplier supllier : Server.getInstance().getSuppliers()) {
+            for(Supplier supplier : Server.getInstance().getSuppliers()) {
                 fileWriter.append("Supplier");
                 fileWriter.append(",");
-                fileWriter.append(supllier.getName());
+                fileWriter.append(supplier.getName());
+                fileWriter.append("\n");
+            }
+            for(Sales sale : Server.getInstance().getSales()) {
+                fileWriter.append("Sale");
+                fileWriter.append(",");
+                fileWriter.append(sale.getBuyerName());
+                fileWriter.append(",");
+                fileWriter.append(sale.getProductSold());
+                fileWriter.append(",");
+                fileWriter.append(String.valueOf(sale.getDate().getTime()));
                 fileWriter.append("\n");
             }
         } catch (Exception e) {

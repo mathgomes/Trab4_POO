@@ -1,42 +1,49 @@
 package OnlineStore;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-
+/**
+ * Representa o servidor da loja.
+ * Onde estão localizados todos os dados guardados.
+ */
 public class Server implements Runnable{
 
-    //create an object of Singleton Server
+    //Cria um objeto do servidor singleton
     private static Server server = new Server();
     // Vetor de runnables para cuidar de cada cliente
     private ArrayList<ClientThread> Clients = new ArrayList<>();
-
+    // Vetor de Clientes cadastrados
     private ArrayList<Client> Customers = new ArrayList<>();
-
+    // Vetor de Produtos e a quantidade de cada um
     private ArrayList<Pair<Product,Integer>> Products = new ArrayList<>();
-
+    // Vetor de fornecedores
     private ArrayList<Supplier> Suppliers = new ArrayList<>();
+    // Vetor de vendas
+    private ArrayList<Sales> Sales = new ArrayList<>();
 
     private ServerSocket serverSocket;
 
     private Server() {}
 
+    // Getters para os vetores
     public static Server getInstance() {
         return server;
     }
-
     public ArrayList<Client> getCustomers() {
         return this.Customers;
     }
-
     public ArrayList<Pair<Product,Integer>> getProducts() {
         return Products;
     }
-
     public ArrayList<Supplier> getSuppliers() {
         return Suppliers;
+    }
+    public ArrayList<Sales> getSales() {
+        return Sales;
     }
 
     @Override
@@ -44,18 +51,18 @@ public class Server implements Runnable{
 
         int portNumber = 12349;
         try {
+
             this.serverSocket = new ServerSocket(portNumber);
             System.out.println("Server started");
             while (true) {
-                //wait for client to connect//
+                // Espera uma conexao
                 Socket socket = serverSocket.accept();
                 System.out.println("Client connected");
-                // Crie uma nova thread com esse objeto
+                // Crie uma nova thread para cuidar desse cliente
                 Clients.add(new ClientThread(socket));
                 ClientThread clientThread = Clients.get(Clients.size()-1);
                 Thread thread = new Thread(clientThread);
                 thread.start();
-                System.out.println("Thread Started");
             }
         } catch (IOException ioe) {
             //I/O error in ServerSocket//
