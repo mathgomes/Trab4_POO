@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -149,6 +150,11 @@ public class ServerGUI extends Application{
                     // Salva as informacoes do arquivo
                     CSVManager.writeCsvFile("information.csv");
                     Platform.exit();
+                    try {
+                        Server.getInstance().getSocket().close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
         );
 

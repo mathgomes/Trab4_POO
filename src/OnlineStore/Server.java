@@ -45,11 +45,14 @@ public class Server implements Runnable{
     public ArrayList<Sales> getSales() {
         return Sales;
     }
+    public ServerSocket getSocket() {
+        return this.serverSocket;
+    }
 
     @Override
     public void run() {
 
-        int portNumber = 12349;
+        int portNumber = 12344;
         try {
 
             this.serverSocket = new ServerSocket(portNumber);

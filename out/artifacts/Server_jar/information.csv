@@ -1,0 +1,37 @@
+(client ou product ou supplier),(userID ou productName ou supplierName),(userPassword ou productPrice),(userName ou expirationDate),(phoneNumber ou productSupplier),(userEmail ou productQtd),(userAddress)
+Product,xboxone,999,999,sony,1
+Product,play4,2,2,microsoft,4
+Product,ipod,1,2,apple,4
+Product,ipod2,1,1,apple,5
+Product,play3,1,1,microsoft,1
+Client,1,1,1,1,1,1
+Client,2,2,2,2,2,2
+Client,oi,como,vai,voce,tambem@gmail.com,flw
+Client,teste,teste,teste,teste,teste,teste
+Supplier,sony
+Supplier,apple
+Supplier,microsoft
+Sale,1,play3,Thu Jan 22 17:41:30 BRST 2015
+Sale,2,ipod,Sat Feb 21 17:47:21 BRST 2015
+Sale,oi,xboxone,Fri Mar 20 16:47:56 BRT 2015
+Sale,oi,ipod,Wed Apr 22 16:41:30 BRT 2015
+Sale,2,xboxone,Thu May 21 16:47:21 BRT 2015
+Sale,2,ipod2,Sat Jun 20 16:47:56 BRT 2015
+Sale,teste,ipod,Mon Jun 22 16:41:30 BRT 2015
+Sale,teste,xboxone,Sun Jun 21 16:47:21 BRT 2015
+Sale,2,ipod2,Tue Oct 20 17:47:56 BRST 2015
+Sale,1,ipod,Sun Nov 22 17:41:30 BRST 2015
+Sale,2,play4,Mon Dec 21 17:47:21 BRST 2015
+Sale,oi,ipod2,Tue Jan 20 17:47:56 BRST 2015
+Sale,1,play4,Sun Feb 22 16:41:30 BRT 2015
+Sale,1,ipod,Sat Mar 21 16:47:21 BRT 2015
+Sale,oi,ipod2,Mon Apr 20 16:47:56 BRT 2015
+Sale,oi,play3,Tue Dec 22 17:41:30 BRST 2015
+Sale,oi,play4,Sat Nov 21 17:47:21 BRST 2015
+Sale,2,ipod2,Tue Oct 20 17:47:56 BRST 2015
+Sale,teste,ipod,Mon Jun 22 16:41:30 BRT 2015
+Sale,teste,play4,Sun Jun 21 16:47:21 BRT 2015
+Sale,2,ipod2,Sat Jun 20 16:47:56 BRT 2015
+Sale,2,play4,Fri May 22 16:41:30 BRT 2015
+Sale,2,ipod,Tue Apr 21 16:47:21 BRT 2015
+Sale,1,xboxone,Mon Jun 22 17:19:33 BRT 2015

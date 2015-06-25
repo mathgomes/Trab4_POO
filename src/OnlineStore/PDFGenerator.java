@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
+/**
+ * Classe responsavel por guardar as informaçoes sobre a geracao de um pdf com dados fornecidos
+ */
 public class PDFGenerator {
 
-    Document document;
-    FileOutputStream output;
+    private Document document;
+    private FileOutputStream output;
 
     public PDFGenerator() {
         this.document = new Document();
@@ -24,6 +27,13 @@ public class PDFGenerator {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Recebe os dados e , com eles, cria um pdf.
+     * @param sales Vetor de vendas
+     * @param time Palavra chave representando "mes" ou "dia"
+     * @param desiredTime Mes ou dia desejado
+     */
     public void create(ArrayList<Sales> sales, String time, String desiredTime) {
         try {
 
@@ -38,7 +48,7 @@ public class PDFGenerator {
             // Se o desejado eh o mes
             if(Objects.equals(time, "mes")) {
                 sales.stream()
-                        // Checa o mes do calendario + 1
+                        // Checa o mes do calendario
                         .filter(s -> s.getDate().get(Calendar.MONTH) == Integer.parseInt(desiredTime))
                         .forEach(s -> {
                             table.addCell(s.getBuyerName());
@@ -46,6 +56,7 @@ public class PDFGenerator {
                             table.addCell(String.valueOf(s.getDate().getTime()));
                         });
             }
+            // A mesma coisa eh feita para o dia
             else if (Objects.equals(time, "dia")) {
                 sales.stream()
                         .filter(s -> s.getDate().get(Calendar.DAY_OF_MONTH) == Integer.parseInt(desiredTime))

@@ -13,11 +13,19 @@ Java versão : 1.8.0_31
 
 ## Sobre a execução :
 
+Execute as classes "ClientGUI.java" e "ServerGUI.java" ou
+execute os arquivos .JAR clicando duas vezes em cada um.
+Obs: Se algum jar não executar, o unico jeito passa a ser na execução do programa.
+
+
 ### Na aplicação cliente :
 
-Cadastrar usuário : Preencha os campos da parte esquerda da area do usuário e clique no botão " Criar conta"
+Primeiro, digite o IP ao qual se deseja conectar, na textFiel.
+Depois, siga para o cadastro ou login.
 
-Fazer login : Prencha os campos da parte direita da area do usuário e clique no botão " Logar mo sistema "
+Cadastrar usuário : Preencha os campos da parte direita da area do usuário e clique no botão " Criar conta"
+
+Fazer login : Prencha os campos da parte esquerda da area do usuário e clique no botão " Logar mo sistema "
 
 Listar itens : Clique no botão "Listar produtos". Os produtos serão mostrados na textArea.
 
@@ -46,7 +54,7 @@ threads que cuidam dos clientes.
 
 - Ao se cadastrar um novo item no servidor, por conveniencia ele é criado com quantidade 1.
 - O fornecedor demora de 10 a 20s para incrementar o estoque de um item esgotado( analogo ao tempo de transporte ).
-- O arquivo information.csv ja comtem alguns clientes, itens e fornecedores para auxiliar nos testes.
+- O arquivo information.csv ja comtem alguns clientes, itens, fornecedores e vendas para auxiliar nos testes.
 - Para que as informações sejam salvas no arquivo, é necessario clicar no botão de logOut do servidor ao sair da aplicação.
 - Clientes só podem comprar 1 item por vez.
 - As datas são medidas em tempo real.

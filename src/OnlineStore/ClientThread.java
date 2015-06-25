@@ -15,13 +15,13 @@ class ClientThread implements Runnable {
 
     // Streams de entrada e saida de objects
     private ObjectOutputStream OutObject;
-    private ObjectInputStream InOnbject;
+    private ObjectInputStream InObject;
     private Socket server;
 
     ClientThread(Socket server) throws IOException {
         this.server = server;
         OutObject = new ObjectOutputStream(server.getOutputStream());
-        InOnbject = new ObjectInputStream(server.getInputStream());
+        InObject = new ObjectInputStream(server.getInputStream());
 
     }
     public void run () {
@@ -30,7 +30,7 @@ class ClientThread implements Runnable {
 
             try {
                 // Recebe um object vindo do cliente
-                Object input = InOnbject.readObject();
+                Object input = InObject.readObject();
                 // Converte o object para uma string
                 String inputStr = (String) input;
                 // Divide a string em tokens

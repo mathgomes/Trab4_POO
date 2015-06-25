@@ -14,8 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -25,32 +23,14 @@ import java.util.Objects;
 public class ClientGUI extends Application{
 
 
-    private static Client client;
+    private Client client;
+    private Label notifications;
 
     public ClientGUI() {
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        client.setInputStream(new ObjectInputStream(client.getSocket().getInputStream()));
-        client.setOutputStream(new ObjectOutputStream(client.getSocket().getOutputStream()));
-
-        /* Thread para receber os inputs do servidor */
-        new Thread(() -> {
-            try {
-                while (true) {
-                    if (Thread.interrupted()) {
-                        break;
-                    }
-                    // Le o vetor index recebido
-                    Client.setAnswer(client.getInputStream().readObject());
-                }
-            } catch (Exception e) {
-                System.out.println("Algo de errado aconteceu!! " + e.getMessage());
-            }
-        }
-        ).start();
 
 
         // Painel base para a tela de login
@@ -62,6 +42,8 @@ public class ClientGUI extends Application{
         TextField userField = new TextField();
         TextField passwordField = new TextField();
         Button log = new Button("Logar no sistema");
+        TextField IPfield = new TextField("Digite o IP aqui");
+        Label conectLabel = new Label("Digite o ip em que deseja se conectar e aperte enter");
 
         Label createAccount = new Label("Nao é ? Crie sua conta");
         Label newID = new Label("ID");
@@ -78,11 +60,12 @@ public class ClientGUI extends Application{
         TextField addressField = new TextField();
         Button create = new Button("Criar Conta");
 
-        Label notifications = new Label();
+        notifications = new Label();
 
         loginPane.setHgap(5);
         loginPane.setVgap(5);
 
+        //Centraliza os botoes
         GridPane.setHalignment(ID, HPos.CENTER);
         GridPane.setHalignment(password,HPos.CENTER);
         GridPane.setHalignment(newID,HPos.CENTER);
@@ -93,7 +76,7 @@ public class ClientGUI extends Application{
         GridPane.setHalignment(address,HPos.CENTER);
         GridPane.setHalignment(create,HPos.CENTER);
 
-        // Evento acionado ao se clica para fazer login
+        // Evento acionado ao se clicar para fazer login
         log.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
                     try {
@@ -146,11 +129,27 @@ public class ClientGUI extends Application{
                 }
         );
 
+        // Evento acionado ao se apertar enter apos digitar o IP para conectar
+        IPfield.setOnAction(event -> {
+            String data = IPfield.getText();
+            client = new Client();
+            try {
+                client.connect(data);
+                conectLabel.setText("Conexao bem sucedida, faca login ou crie uma conta");
+                IPfield.setText(" ");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
         // Adiciona todos os componentes no painel base
         loginPane.addColumn(0,signIn,ID,password);
         loginPane.add(userField,1,1);
         loginPane.add(passwordField,1,2);
         loginPane.add(log,0,3);
+        loginPane.add(notifications,0,4,2,4);
+        loginPane.add(IPfield,0,5);
+        loginPane.add(conectLabel,0,6,2,6);
 
         loginPane.addColumn(2,createAccount,newID,newpassword,name,phone,email,address);
         loginPane.add(newuserField,3,1);
@@ -161,7 +160,6 @@ public class ClientGUI extends Application{
         loginPane.add(addressField,3,6);
         loginPane.add(create,3,7);
 
-        loginPane.add(notifications,0,4,2,4);
 
         primaryStage.setTitle("Area de Login");
         primaryStage.setScene(new Scene(loginPane, 700, 400));
@@ -170,7 +168,7 @@ public class ClientGUI extends Application{
     }
 
     /**
-     *  Classe interna que representa a interface grafica parte de compras de produtos
+     *  Classe interna que representa a interface grafica da parte de compras de produtos
      */
     public class ShopStage extends Stage {
 
@@ -268,13 +266,6 @@ public class ClientGUI extends Application{
     }
 
     public static void main(String []args) {
-
-        try {
-            client = new Client();
-            client.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         launch(args);
     }
 }

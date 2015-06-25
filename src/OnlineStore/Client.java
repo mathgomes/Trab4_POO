@@ -70,11 +70,28 @@ public class Client {
     public Object getAnswer() {return answer;}
 
     // Conecta no servidor
-    public void connect() throws IOException {
+    public void connect(String IP) throws IOException {
 
         System.out.println("Client started!!");
-        socket = new Socket(Inet4Address.getLocalHost().getHostAddress(), 12349);
-        System.out.println("Connection established!!");
+        socket = new Socket(IP, 12344);
 
+        inputStream = new ObjectInputStream(socket.getInputStream());
+        outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+        /* Thread para receber os inputs do servidor */
+        new Thread(() -> {
+            try {
+                while (true) {
+                    if (Thread.interrupted()) {
+                        break;
+                    }
+                    // Le o vetor index recebido
+                    Client.setAnswer(inputStream.readObject());
+                }
+            } catch (Exception e) {
+                System.out.println("Algo de errado aconteceu!! " + e.getMessage());
+            }
+        }
+        ).start();
     }
 }
