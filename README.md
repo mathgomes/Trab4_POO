@@ -20,7 +20,7 @@ Obs: Se algum jar não executar, o unico jeito passa a ser na execução do prog
 
 ### Na aplicação cliente :
 
-Primeiro, digite o IP ao qual se deseja conectar, na textFiel.
+Primeiro, digite o IP ao qual se deseja conectar, na textField.
 Depois, siga para o cadastro ou login.
 
 Cadastrar usuário : Preencha os campos da parte direita da area do usuário e clique no botão " Criar conta"
