@@ -2,6 +2,7 @@ package OnlineStore;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -47,6 +48,9 @@ public class PDFGenerator {
 
             // Se o desejado eh o mes
             if(Objects.equals(time, "mes")) {
+                Paragraph para1 = new Paragraph();
+                para1.add("Vendas do mes " + desiredTime);
+                document.add(para1);
                 sales.stream()
                         // Checa o mes do calendario
                         .filter(s -> s.getDate().get(Calendar.MONTH) == Integer.parseInt(desiredTime))
@@ -58,6 +62,10 @@ public class PDFGenerator {
             }
             // A mesma coisa eh feita para o dia
             else if (Objects.equals(time, "dia")) {
+                Paragraph para1 = new Paragraph();
+                para1.add("Vendas do dia " + desiredTime);
+                document.add(para1);
+                document.addTitle("Vendas do dia "+ desiredTime);
                 sales.stream()
                         .filter(s -> s.getDate().get(Calendar.DAY_OF_MONTH) == Integer.parseInt(desiredTime))
                         .forEach(s -> {

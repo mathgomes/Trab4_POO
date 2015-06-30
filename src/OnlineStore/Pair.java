@@ -16,8 +16,11 @@ public class Pair<L,R> implements Serializable {
         this.l = l;
         this.r = r;
     }
+    // Retorna o objeto a esquerda
     public L getL(){ return l; }
+    // Retorna o objeto a direita
     public R getR(){ return r; }
+    // Atribui um objeto ao campo da equerda e da direita
     public void setL(L l){ this.l = l; }
     public void setR(R r){ this.r = r; }
 }

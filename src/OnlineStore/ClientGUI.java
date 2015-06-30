@@ -36,6 +36,7 @@ public class ClientGUI extends Application{
         // Painel base para a tela de login
         GridPane loginPane = new GridPane();
 
+        // Cria todos os botoes,labels, textAreas e fields
         Label signIn = new Label("Ja é cadastrado ? Entre");
         Label ID = new Label("ID");
         Label password = new Label("Senha");
@@ -173,6 +174,7 @@ public class ClientGUI extends Application{
     public class ShopStage extends Stage {
 
 
+        // Cria todos os botoes,labels, textAreas e fields
         GridPane shopPane = new GridPane();
         Button listProducts = new Button("Listar Pordutos");
         Button efetuarCompra = new Button("Efetuar Compra");
@@ -237,7 +239,7 @@ public class ClientGUI extends Application{
                             if(client.getAnswer() instanceof String) {
                                 notifications.setText("Item esgotado :(");
                             }
-                            // Se nao, adiciona o produto ao carrinho de compras e reporte o sucesso
+                            // Se nao, reporte o sucesso
                             else {
                                 Product p = (Product)client.getAnswer();
                                 System.out.println("Recebeu " + p.getName() + p.getAvailability()+"\n");

@@ -61,7 +61,7 @@ class ClientThread implements Runnable {
                                     String esgotado = "Item esgotado";
                                     OutObject.writeObject(esgotado);
                                     break;
-                                // Se ele esta em estoque
+                                    // Se ele esta em estoque
                                 } else {
 
                                     // Envia o item de volta
@@ -73,7 +73,7 @@ class ClientThread implements Runnable {
                                     Server.getInstance().getCustomers().stream()
                                             .filter(client -> client.getSocket() == this.server)
                                             .map(Client::getID)
-                                            .forEach(client -> Server.getInstance().getSales().add(new Sales(client,p.getL().getName(),new Date())));
+                                            .forEach(client -> Server.getInstance().getSales().add(new Sales(client, p.getL().getName(), new Date())));
                                     // Se o estoque acabou
                                     if (p.getR() <= 0) {
                                         p.getL().setAvailability(false);
@@ -84,7 +84,6 @@ class ClientThread implements Runnable {
                                 }
                             }
                         }
-
                 }
                 // Se a requisicao for qualquer outra coisa, eh uma requisicao de login ou cadastro
                 else {

@@ -14,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -31,6 +30,7 @@ public class ServerGUI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        // Cria todos os botoes,labels, textAreas e fields
         GridPane serverPane = new GridPane();
         Button listAvailable = new Button("Listar Pordutos Disponiveis");
         Button listUnavailable = new Button("Listar Pordutos Nao Disponiveis");
@@ -78,14 +78,14 @@ public class ServerGUI extends Application{
                                     .collect(Collectors.toList());
                             // Se nao existir esse fornecedor
                             if(list.isEmpty()) {
-                                // Cria um novo fornecedor e adiciona-o a lista de fornecedores
+                                // Cria um novo fornecedor e o adiciona a lista de fornecedores
                                 Supplier s = new Supplier(token[3]);
                                 Server.getInstance().getSuppliers().add(s);
                             }
-                            else {
-                                notifications.setText("Produto ja existe");
-                            }
                             notifications.setText("Produto cadastrado com sucesso");
+                        }
+                        else {
+                            notifications.setText("Produto ja existe");
                         }
                         field.setText("");
 
@@ -126,7 +126,7 @@ public class ServerGUI extends Application{
 
         generateSales.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
-                    notifications.setText("Digite o dia ou o mes na forma " + "dia,<dia> ou mes,<mes> em numeros");
+                    notifications.setText("Digite o dia ou o mes na forma " + "dia,<dia> ou mes,<mes> na forma numerica");
                     field.setOnAction(event -> {
 
                         // Recebe o que foi digitado do textField
