@@ -1,5 +1,5 @@
 (client ou product ou supplier),(userID ou productName ou supplierName),(userPassword ou productPrice),(userName ou expirationDate),(phoneNumber ou productSupplier),(userEmail ou productQtd),(userAddress)
-Product,xboxone,999,999,sony,1
+Product,xboxone,999,999,sony,3
 Product,play4,2,2,microsoft,4
 Product,ipod,1,2,apple,4
 Product,ipod2,1,1,apple,5
@@ -35,3 +35,4 @@ Sale,2,ipod2,Sat Jun 20 16:47:56 BRT 2015
 Sale,2,play4,Fri May 22 16:41:30 BRT 2015
 Sale,2,ipod,Tue Apr 21 16:47:21 BRT 2015
 Sale,1,xboxone,Mon Jun 22 17:19:33 BRT 2015
+Sale,1,xboxone,Wed Jul 01 17:47:35 BRT 2015

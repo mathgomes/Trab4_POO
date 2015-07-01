@@ -22,12 +22,13 @@ import java.util.Objects;
  */
 public class ClientGUI extends Application{
 
-
     private Client client;
+    // Notificacoes na tela
     private Label notifications;
 
     public ClientGUI() {
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -242,7 +243,6 @@ public class ClientGUI extends Application{
                             // Se nao, reporte o sucesso
                             else {
                                 Product p = (Product)client.getAnswer();
-                                System.out.println("Recebeu " + p.getName() + p.getAvailability()+"\n");
                                 notifications.setText("Compra efetuada com sucesso");
                             }
                         });

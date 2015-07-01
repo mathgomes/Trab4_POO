@@ -1,21 +1,21 @@
 # Trab4_POO
 
 
-Matheus Gomes da Silva Horta - 8532321
-Lais Helena Chiachio de miranda - 8517032
-Gabriela Duque - 7694220
+Matheus Gomes da Silva Horta - 8532321<br />
+Lais Helena Chiachio de miranda - 8517032<br />
+Gabriela Duque - 7694220<br />
 
 ## Sobre o sistema :
 
-Sistema Operacional : Windows 8.1
-IDE utilizada : Intellij IDEA
-Java versão : 1.8.0_31
+Sistema Operacional : Windows 8.1<br />
+IDE utilizada : Intellij IDEA<br />
+Java versão : 1.8.0_31<br />
 
 ## Sobre a execução :
 
-Execute as classes "ClientGUI.java" e "ServerGUI.java" ou
-execute os arquivos .JAR clicando duas vezes em cada um.
-Obs: Se algum jar não executar, o unico jeito passa a ser na execução do programa.
+Execute as classes "ClientGUI.java" e "ServerGUI.java" ou<br />
+execute os arquivos .JAR localizados em out/artifacts/Client_jar e out/artifacts/Server_jar clicando duas vezes em cada um.<br />
+Obs: Se algum jar não executar, o unico jeito passa a ser na execução do programa.<br />
 
 
 ### Na aplicação cliente :

@@ -35,7 +35,6 @@ public class Supplier {
                 // O item agora esta disponivel
                 p.getL().setAvailability(true);
                 Platform.runLater(() -> ServerGUI.notifications.setText("produto "+ p.getL().getName() +" restocado em "+ p.getR()+" unidades"));
-
             } catch (Exception e) {
                 System.out.println("Algo de errado aconteceu!! " + e.getMessage());
             }
@@ -43,6 +42,7 @@ public class Supplier {
         ).start();
 
     }
+
 
     public String getName() {
         return name;

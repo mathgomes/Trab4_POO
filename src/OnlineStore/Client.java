@@ -1,15 +1,12 @@
 package OnlineStore;
 
 import java.io.*;
-import java.net.Inet4Address;
 import java.net.Socket;
-import java.util.*;
 
 /**
  * Cliente que representa um consumidor que entra na loja
  */
 public class Client {
-
 
     // Socket desse cliente
     private Socket socket;
@@ -24,7 +21,7 @@ public class Client {
     private String email;
     private String ID;
     private String password;
-
+    // Guarda as respostas vindas do servidor
     private static Object answer = null;
 
     public Client(){}
